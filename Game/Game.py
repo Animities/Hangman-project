@@ -1,6 +1,5 @@
 import functions
 
-
 wordList = []
 
 file = open("WordList.txt", "r")
@@ -15,37 +14,9 @@ for i in range(functions.getLineCount()):
 # print(wordList)  # For testing purposes only.
 file.close()
 
-
 # Get random word from list
 
-
 pickedWord = functions.findWord(wordList).upper()
-
-
-def singleCharGuess(pWord, UiGuess, wBin, gWord):
-    if pWord.find(UiGuess) != -1:
-        for j in range(len(pickedWord)):
-            if pickedWord[j].upper() == UiGuess.upper():
-                gWord[j] = UiGuess.upper()
-                return 0
-
-    elif UiGuess in wBin:
-        print("You've already guessed this letter.")
-        return 1
-    
-    else:
-        wBin.append(UiGuess)
-        wBin.sort()
-        return 2
-
-
-def wordGuess(UiGuess, pWord):
-    if UiGuess.upper() == pWord.upper():
-        print(pWord + " is right! Congratulations!")
-        return 1
-    else:
-        print("Sorry, that's not the word!")
-        return 2
 
 
 def game(word):  # The main game
@@ -61,17 +32,17 @@ def game(word):  # The main game
         string = ""
         if len(guesses) == 1:  # Guess a letter
 
-            if singleCharGuess(word, guesses, wordBin, guessedWord) == 2:
+            if functions.singleCharGuess(word, guesses, wordBin, guessedWord) == 2:
                 attemptsLeft -=1
 
             print(guessedWord)
             print("The wrong letters:", wordBin)
 
         elif len(guesses) > 1:  # Guess a word
-            if wordGuess(guesses, word) == 1:
+            if functions.wordGuess(guesses, word) == 1:
                 score = attemptsLeft*100
                 return score
-            elif wordGuess(guesses, word) == 2:
+            elif functions.wordGuess(guesses, word) == 2:
                 attemptsLeft -=1
 
         for letters in guessedWord:  # Seeing if they guessed the word without inputting a word
@@ -99,7 +70,6 @@ def highScoreFunc(scores):  # hangman high score system
         q = open("highScore.txt", "w")
         highScore = 0
         print("There has been a value error")
-
     if int(scores) > int(highScore):
         w = open("highScore.txt", "w")
         w.write(str(scores))
